@@ -1,0 +1,38 @@
+sudo: false
+
+language: cpp
+os: linux
+compiler: clang
+
+cache:
+  ccache: true
+
+# Do not build our sync branch.
+branches:
+  only:
+    - master
+    #- Travis*
+
+# Without the top-level env, no job will be allowed to fail.
+env:
+
+matrix:
+  # Abort all builds on a single failing matrix entry.
+  fast_finish: true
+
+  exclude:
+    # Note: Workaround travis-ci/travis-ci#4681
+    # Exclude default job which lacks our included environment variables.
+    - os: linux
+
+  include:
+    - env: TOOL=clang-format
+      script: &format_script
+        - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then .ci/format_script.sh; fi
+
+  #allow_failures:
+    # a lot of code doesn't follow clang-format yet
+    #- env: TOOL=clang-format
+
+
+on_failure: echo "Showing current directory contents" && ls -la

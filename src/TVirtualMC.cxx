@@ -29,26 +29,24 @@ The concrete Monte Carlo (Geant3, Geant4) is selected at run time -
 when processing a ROOT macro where the concrete Monte Carlo is instantiated.
 */
 
-TMCThreadLocal TVirtualMC *TVirtualMC::fgMC = nullptr;
+TMCThreadLocal TVirtualMC* TVirtualMC::fgMC = nullptr;
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// Standard constructor
 ///
 
-TVirtualMC::TVirtualMC(const char *name, const char *title, Bool_t /*isRootGeometrySupported*/)
-   : TNamed(name, title), fApplication(nullptr), fId(0), fStack(nullptr), fManagerStack(nullptr), fDecayer(nullptr),
-     fRandom(nullptr), fMagField(nullptr), fUseExternalGeometryConstruction(kFALSE),
-     fUseExternalParticleGeneration(kFALSE)
+TVirtualMC::TVirtualMC(const char* name, const char* title, Bool_t /*isRootGeometrySupported*/)
+  : TNamed(name, title), fApplication(nullptr), fId(0), fStack(nullptr), fManagerStack(nullptr), fDecayer(nullptr), fRandom(nullptr), fMagField(nullptr), fUseExternalGeometryConstruction(kFALSE), fUseExternalParticleGeneration(kFALSE)
 {
-   fApplication = TVirtualMCApplication::Instance();
+  fApplication = TVirtualMCApplication::Instance();
 
-   if (fApplication) {
-      fApplication->Register(this);
-   } else {
-      ::Fatal("TVirtualMC::TVirtualMC", "No user MC application is defined.");
-   }
-   fgMC = this;
-   fRandom = gRandom;
+  if (fApplication) {
+    fApplication->Register(this);
+  } else {
+    ::Fatal("TVirtualMC::TVirtualMC", "No user MC application is defined.");
+  }
+  fgMC = this;
+  fRandom = gRandom;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -57,9 +55,7 @@ TVirtualMC::TVirtualMC(const char *name, const char *title, Bool_t /*isRootGeome
 ///
 
 TVirtualMC::TVirtualMC()
-   : TNamed(), fApplication(nullptr), fId(0), fStack(nullptr), fManagerStack(nullptr), fDecayer(nullptr),
-     fRandom(nullptr), fMagField(nullptr), fUseExternalGeometryConstruction(kFALSE),
-     fUseExternalParticleGeneration(kFALSE)
+  : TNamed(), fApplication(nullptr), fId(0), fStack(nullptr), fManagerStack(nullptr), fDecayer(nullptr), fRandom(nullptr), fMagField(nullptr), fUseExternalGeometryConstruction(kFALSE), fUseExternalParticleGeneration(kFALSE)
 {
 }
 
@@ -70,7 +66,7 @@ TVirtualMC::TVirtualMC()
 
 TVirtualMC::~TVirtualMC()
 {
-   fgMC = nullptr;
+  fgMC = nullptr;
 }
 
 //
@@ -82,9 +78,9 @@ TVirtualMC::~TVirtualMC()
 /// Static access method
 ///
 
-TVirtualMC *TVirtualMC::GetMC()
+TVirtualMC* TVirtualMC::GetMC()
 {
-   return fgMC;
+  return fgMC;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -92,9 +88,9 @@ TVirtualMC *TVirtualMC::GetMC()
 /// Set particles stack.
 ///
 
-void TVirtualMC::SetStack(TVirtualMCStack *stack)
+void TVirtualMC::SetStack(TVirtualMCStack* stack)
 {
-   fStack = stack;
+  fStack = stack;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -102,9 +98,9 @@ void TVirtualMC::SetStack(TVirtualMCStack *stack)
 /// Set external decayer.
 ///
 
-void TVirtualMC::SetExternalDecayer(TVirtualMCDecayer *decayer)
+void TVirtualMC::SetExternalDecayer(TVirtualMCDecayer* decayer)
 {
-   fDecayer = decayer;
+  fDecayer = decayer;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -112,10 +108,10 @@ void TVirtualMC::SetExternalDecayer(TVirtualMCDecayer *decayer)
 /// Set random number generator.
 ///
 
-void TVirtualMC::SetRandom(TRandom *random)
+void TVirtualMC::SetRandom(TRandom* random)
 {
-   gRandom = random;
-   fRandom = random;
+  gRandom = random;
+  fRandom = random;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -123,9 +119,9 @@ void TVirtualMC::SetRandom(TRandom *random)
 /// Set magnetic field.
 ///
 
-void TVirtualMC::SetMagField(TVirtualMagField *field)
+void TVirtualMC::SetMagField(TVirtualMagField* field)
 {
-   fMagField = field;
+  fMagField = field;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +131,7 @@ void TVirtualMC::SetMagField(TVirtualMagField *field)
 
 void TVirtualMC::ProcessEvent()
 {
-   Warning("ProcessEvent", "Not implemented.");
+  Warning("ProcessEvent", "Not implemented.");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -145,7 +141,7 @@ void TVirtualMC::ProcessEvent()
 
 void TVirtualMC::ProcessEvent(Int_t eventId)
 {
-   ProcessEvent(eventId, kFALSE);
+  ProcessEvent(eventId, kFALSE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -155,8 +151,8 @@ void TVirtualMC::ProcessEvent(Int_t eventId)
 
 Int_t TVirtualMC::StepNumber() const
 {
-   Warning("StepNumber", "Not implemented.");
-   return 0;
+  Warning("StepNumber", "Not implemented.");
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -166,8 +162,8 @@ Int_t TVirtualMC::StepNumber() const
 
 Double_t TVirtualMC::TrackWeight() const
 {
-   Warning("Weight", "Not implemented.");
-   return 1.;
+  Warning("Weight", "Not implemented.");
+  return 1.;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -175,12 +171,12 @@ Double_t TVirtualMC::TrackWeight() const
 /// Get the current polarization
 ///
 
-void TVirtualMC::TrackPolarization(Double_t &polX, Double_t &polY, Double_t &polZ) const
+void TVirtualMC::TrackPolarization(Double_t& polX, Double_t& polY, Double_t& polZ) const
 {
-   Warning("Polarization", "Not implemented.");
-   polX = 0.;
-   polY = 0.;
-   polZ = 0.;
+  Warning("Polarization", "Not implemented.");
+  polX = 0.;
+  polY = 0.;
+  polZ = 0.;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -188,12 +184,12 @@ void TVirtualMC::TrackPolarization(Double_t &polX, Double_t &polY, Double_t &pol
 /// Get the current polarization
 ///
 
-void TVirtualMC::TrackPolarization(TVector3 &pol) const
+void TVirtualMC::TrackPolarization(TVector3& pol) const
 {
-   Warning("Polarization", "Not implemented.");
-   pol[0] = 0.;
-   pol[1] = 0.;
-   pol[2] = 0.;
+  Warning("Polarization", "Not implemented.");
+  pol[0] = 0.;
+  pol[1] = 0.;
+  pol[2] = 0.;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -203,16 +199,16 @@ void TVirtualMC::TrackPolarization(TVector3 &pol) const
 
 void TVirtualMC::SetId(UInt_t id)
 {
-   fId = id;
+  fId = id;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// Set container holding additional information for transported TParticles
 ///
-void TVirtualMC::SetManagerStack(TMCManagerStack *stack)
+void TVirtualMC::SetManagerStack(TMCManagerStack* stack)
 {
-   fManagerStack = stack;
+  fManagerStack = stack;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -223,7 +219,7 @@ void TVirtualMC::SetManagerStack(TMCManagerStack *stack)
 
 void TVirtualMC::SetExternalGeometryConstruction(Bool_t value)
 {
-   fUseExternalGeometryConstruction = value;
+  fUseExternalGeometryConstruction = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +230,7 @@ void TVirtualMC::SetExternalGeometryConstruction(Bool_t value)
 
 void TVirtualMC::SetExternalParticleGeneration(Bool_t value)
 {
-   fUseExternalParticleGeneration = value;
+  fUseExternalParticleGeneration = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -248,8 +244,8 @@ void TVirtualMC::SetExternalParticleGeneration(Bool_t value)
 
 void TVirtualMC::ProcessEvent(Int_t eventId, Bool_t isInterruptible)
 {
-   const char *interruptibleText = isInterruptible ? "interruptible" : "non-interruptible";
-   Warning("ProcessInterruptibleEvent", "Process %s event %i. Not implemented.", interruptibleText, eventId);
+  const char* interruptibleText = isInterruptible ? "interruptible" : "non-interruptible";
+  Warning("ProcessInterruptibleEvent", "Process %s event %i. Not implemented.", interruptibleText, eventId);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -260,5 +256,5 @@ void TVirtualMC::ProcessEvent(Int_t eventId, Bool_t isInterruptible)
 
 void TVirtualMC::InterruptTrack()
 {
-   Warning("InterruptTrack", "Not implemented.");
+  Warning("InterruptTrack", "Not implemented.");
 }

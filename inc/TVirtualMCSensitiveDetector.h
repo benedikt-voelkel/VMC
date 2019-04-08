@@ -22,37 +22,38 @@
 
 class TParticle;
 
-class TVirtualMCSensitiveDetector : public TNamed {
+class TVirtualMCSensitiveDetector : public TNamed
+{
 
-public:
-   // Constructor
-   TVirtualMCSensitiveDetector(const char *name, const char *title = "");
-   TVirtualMCSensitiveDetector(const TString &name, const TString &title = "");
+ public:
+  // Constructor
+  TVirtualMCSensitiveDetector(const char* name, const char* title = "");
+  TVirtualMCSensitiveDetector(const TString& name, const TString& title = "");
 
-   // Destructor
-   virtual ~TVirtualMCSensitiveDetector();
+  // Destructor
+  virtual ~TVirtualMCSensitiveDetector();
 
-   /// Initialize detector.
-   /// Called at initialization of geometry before MCApplication::InitGeometry().
-   virtual void Initialize() = 0;
+  /// Initialize detector.
+  /// Called at initialization of geometry before MCApplication::InitGeometry().
+  virtual void Initialize() = 0;
 
-   /// Process hits.
-   /// Called at each step when track pass through the associated volume
-   virtual void ProcessHits() = 0;
+  /// Process hits.
+  /// Called at each step when track pass through the associated volume
+  virtual void ProcessHits() = 0;
 
-   /// End of event.
-   /// Called at end of event before MCApplication::FinishEvent().
-   virtual void EndOfEvent() = 0;
+  /// End of event.
+  /// Called at end of event before MCApplication::FinishEvent().
+  virtual void EndOfEvent() = 0;
 
-protected:
-   // Default constructor
-   TVirtualMCSensitiveDetector();
-   // Copy constructor
-   TVirtualMCSensitiveDetector(const TVirtualMCSensitiveDetector &rhs);
-   // Assignment constructor
-   TVirtualMCSensitiveDetector &operator=(const TVirtualMCSensitiveDetector &rhs);
+ protected:
+  // Default constructor
+  TVirtualMCSensitiveDetector();
+  // Copy constructor
+  TVirtualMCSensitiveDetector(const TVirtualMCSensitiveDetector& rhs);
+  // Assignment constructor
+  TVirtualMCSensitiveDetector& operator=(const TVirtualMCSensitiveDetector& rhs);
 
-   ClassDef(TVirtualMCSensitiveDetector, 1) // Interface to a user sensitive detector
+  ClassDef(TVirtualMCSensitiveDetector, 1) // Interface to a user sensitive detector
 };
 
 #endif // ROOT_TVirtualMCSensitiveDetector

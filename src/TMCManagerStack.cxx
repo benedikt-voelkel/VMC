@@ -29,8 +29,7 @@ Concrete implementation of particles stack used by the TMCManager.
 ///
 
 TMCManagerStack::TMCManagerStack()
-   : TVirtualMCStack(), fCurrentTrackId(-1), fUserStack(nullptr), fTotalNPrimaries(nullptr), fTotalNTracks(nullptr),
-     fParticles(nullptr), fParticlesStatus(nullptr), fBranchArrayContainer(nullptr)
+  : TVirtualMCStack(), fCurrentTrackId(-1), fUserStack(nullptr), fTotalNPrimaries(nullptr), fTotalNTracks(nullptr), fParticles(nullptr), fParticlesStatus(nullptr), fBranchArrayContainer(nullptr)
 {
 }
 
@@ -41,11 +40,11 @@ TMCManagerStack::TMCManagerStack()
 
 void TMCManagerStack::PushTrack(Int_t toBeDone, Int_t parent, Int_t pdg, Double_t px, Double_t py, Double_t pz,
                                 Double_t e, Double_t vx, Double_t vy, Double_t vz, Double_t tof, Double_t polx,
-                                Double_t poly, Double_t polz, TMCProcess mech, Int_t &ntr, Double_t weight, Int_t is)
+                                Double_t poly, Double_t polz, TMCProcess mech, Int_t& ntr, Double_t weight, Int_t is)
 {
-   // Just forward to user stack
-   fUserStack->PushTrack(toBeDone, parent, pdg, px, py, pz, e, vx, vy, vz, tof, polx, poly, polz, mech, ntr, weight,
-                         is);
+  // Just forward to user stack
+  fUserStack->PushTrack(toBeDone, parent, pdg, px, py, pz, e, vx, vy, vz, tof, polx, poly, polz, mech, ntr, weight,
+                        is);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -53,22 +52,22 @@ void TMCManagerStack::PushTrack(Int_t toBeDone, Int_t parent, Int_t pdg, Double_
 /// Pop next track
 ///
 
-TParticle *TMCManagerStack::PopNextTrack(Int_t &itrack)
+TParticle* TMCManagerStack::PopNextTrack(Int_t& itrack)
 {
 
-   if (fPrimariesStack.empty() && fSecondariesStack.empty()) {
-      itrack = -1;
-      return nullptr;
-   }
+  if (fPrimariesStack.empty() && fSecondariesStack.empty()) {
+    itrack = -1;
+    return nullptr;
+  }
 
-   std::stack<Int_t> *mcStack = &fPrimariesStack;
+  std::stack<Int_t>* mcStack = &fPrimariesStack;
 
-   if (fPrimariesStack.empty()) {
-      mcStack = &fSecondariesStack;
-   }
-   itrack = mcStack->top();
-   mcStack->pop();
-   return fParticles->operator[](itrack);
+  if (fPrimariesStack.empty()) {
+    mcStack = &fSecondariesStack;
+  }
+  itrack = mcStack->top();
+  mcStack->pop();
+  return fParticles->operator[](itrack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,10 +75,10 @@ TParticle *TMCManagerStack::PopNextTrack(Int_t &itrack)
 /// Pop i'th primary; that does not mean that this primariy has ID==i
 ///
 
-TParticle *TMCManagerStack::PopPrimaryForTracking(Int_t i)
+TParticle* TMCManagerStack::PopPrimaryForTracking(Int_t i)
 {
-   Int_t itrack = -1;
-   return PopPrimaryForTracking(i, itrack);
+  Int_t itrack = -1;
+  return PopPrimaryForTracking(i, itrack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -88,18 +87,18 @@ TParticle *TMCManagerStack::PopPrimaryForTracking(Int_t i)
 /// including actual index
 ///
 
-TParticle *TMCManagerStack::PopPrimaryForTracking(Int_t i, Int_t &itrack)
+TParticle* TMCManagerStack::PopPrimaryForTracking(Int_t i, Int_t& itrack)
 {
-   // Completely ignore the index i, that is meaningless since the user does not
-   // know how the stack is handled internally.
-   Warning("PopPrimaryForTracking", "Lookup index %i is ignored.", i);
-   if (fPrimariesStack.empty()) {
-      itrack = -1;
-      return nullptr;
-   }
-   itrack = fPrimariesStack.top();
-   fPrimariesStack.pop();
-   return fParticles->operator[](itrack);
+  // Completely ignore the index i, that is meaningless since the user does not
+  // know how the stack is handled internally.
+  Warning("PopPrimaryForTracking", "Lookup index %i is ignored.", i);
+  if (fPrimariesStack.empty()) {
+    itrack = -1;
+    return nullptr;
+  }
+  itrack = fPrimariesStack.top();
+  fPrimariesStack.pop();
+  return fParticles->operator[](itrack);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +108,7 @@ TParticle *TMCManagerStack::PopPrimaryForTracking(Int_t i, Int_t &itrack)
 
 Int_t TMCManagerStack::GetNtrack() const
 {
-   return *fTotalNTracks;
+  return *fTotalNTracks;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -119,7 +118,7 @@ Int_t TMCManagerStack::GetNtrack() const
 
 Int_t TMCManagerStack::GetStackedNtrack() const
 {
-   return fPrimariesStack.size() + fSecondariesStack.size();
+  return fPrimariesStack.size() + fSecondariesStack.size();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -129,7 +128,7 @@ Int_t TMCManagerStack::GetStackedNtrack() const
 
 Int_t TMCManagerStack::GetNprimary() const
 {
-   return *fTotalNPrimaries;
+  return *fTotalNPrimaries;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +138,7 @@ Int_t TMCManagerStack::GetNprimary() const
 
 Int_t TMCManagerStack::GetStackedNprimary() const
 {
-   return fPrimariesStack.size();
+  return fPrimariesStack.size();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -147,14 +146,14 @@ Int_t TMCManagerStack::GetStackedNprimary() const
 /// Current track
 ///
 
-TParticle *TMCManagerStack::GetCurrentTrack() const
+TParticle* TMCManagerStack::GetCurrentTrack() const
 {
-   if (fCurrentTrackId < 0) {
-      Fatal("GetCurrentTrack", "There is no current track set");
-   }
-   // That is not actually the current track but the user's TParticle at the
-   // vertex.
-   return fParticles->operator[](fCurrentTrackId);
+  if (fCurrentTrackId < 0) {
+    Fatal("GetCurrentTrack", "There is no current track set");
+  }
+  // That is not actually the current track but the user's TParticle at the
+  // vertex.
+  return fParticles->operator[](fCurrentTrackId);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -164,7 +163,7 @@ TParticle *TMCManagerStack::GetCurrentTrack() const
 
 Int_t TMCManagerStack::GetCurrentTrackNumber() const
 {
-   return fCurrentTrackId;
+  return fCurrentTrackId;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +173,7 @@ Int_t TMCManagerStack::GetCurrentTrackNumber() const
 
 Int_t TMCManagerStack::GetCurrentParentTrackNumber() const
 {
-   return fParticlesStatus->operator[](fCurrentTrackId)->fParentId;
+  return fParticlesStatus->operator[](fCurrentTrackId)->fParentId;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -185,11 +184,11 @@ Int_t TMCManagerStack::GetCurrentParentTrackNumber() const
 
 void TMCManagerStack::SetCurrentTrack(Int_t trackId)
 {
-   if (!HasTrackId(trackId)) {
-      Fatal("SetCurrentTrack", "Invalid track ID %i", trackId);
-   }
-   fCurrentTrackId = trackId;
-   fUserStack->SetCurrentTrack(trackId);
+  if (!HasTrackId(trackId)) {
+    Fatal("SetCurrentTrack", "Invalid track ID %i", trackId);
+  }
+  fCurrentTrackId = trackId;
+  fUserStack->SetCurrentTrack(trackId);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -197,12 +196,12 @@ void TMCManagerStack::SetCurrentTrack(Int_t trackId)
 /// Get TMCParticleStatus by trackId
 ///
 
-const TMCParticleStatus *TMCManagerStack::GetParticleStatus(Int_t trackId) const
+const TMCParticleStatus* TMCManagerStack::GetParticleStatus(Int_t trackId) const
 {
-   if (!HasTrackId(trackId)) {
-      Fatal("GetParticleStatus", "Invalid track ID %i", trackId);
-   }
-   return fParticlesStatus->operator[](trackId).get();
+  if (!HasTrackId(trackId)) {
+    Fatal("GetParticleStatus", "Invalid track ID %i", trackId);
+  }
+  return fParticlesStatus->operator[](trackId).get();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -210,12 +209,12 @@ const TMCParticleStatus *TMCManagerStack::GetParticleStatus(Int_t trackId) const
 /// Get particle's geometry status by trackId
 ///
 
-const TGeoBranchArray *TMCManagerStack::GetGeoState(Int_t trackId) const
+const TGeoBranchArray* TMCManagerStack::GetGeoState(Int_t trackId) const
 {
-   if (!HasTrackId(trackId)) {
-      Fatal("GetParticleStatus", "Invalid track ID %i", trackId);
-   }
-   return fBranchArrayContainer->GetGeoState(fParticlesStatus->operator[](trackId)->fGeoStateIndex);
+  if (!HasTrackId(trackId)) {
+    Fatal("GetParticleStatus", "Invalid track ID %i", trackId);
+  }
+  return fBranchArrayContainer->GetGeoState(fParticlesStatus->operator[](trackId)->fGeoStateIndex);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -225,19 +224,19 @@ const TGeoBranchArray *TMCManagerStack::GetGeoState(Int_t trackId) const
 
 void TMCManagerStack::NotifyOnRestoredGeometry(Int_t trackId)
 {
-   if (!HasTrackId(trackId)) {
-      Fatal("NotifyOnRestoredGeometry", "Invalid track ID %i", trackId);
-   }
-   fBranchArrayContainer->FreeGeoState(fParticlesStatus->operator[](trackId)->fGeoStateIndex);
+  if (!HasTrackId(trackId)) {
+    Fatal("NotifyOnRestoredGeometry", "Invalid track ID %i", trackId);
+  }
+  fBranchArrayContainer->FreeGeoState(fParticlesStatus->operator[](trackId)->fGeoStateIndex);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// To free the cached geo state which was associated to a track
 ///
-void TMCManagerStack::NotifyOnRestoredGeometry(const TGeoBranchArray *geoState)
+void TMCManagerStack::NotifyOnRestoredGeometry(const TGeoBranchArray* geoState)
 {
-   fBranchArrayContainer->FreeGeoState(geoState);
+  fBranchArrayContainer->FreeGeoState(geoState);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -247,10 +246,10 @@ void TMCManagerStack::NotifyOnRestoredGeometry(const TGeoBranchArray *geoState)
 
 Bool_t TMCManagerStack::HasTrackId(Int_t trackId) const
 {
-   if (trackId >= 0 && trackId < static_cast<Int_t>(fParticles->size()) && fParticles->operator[](trackId)) {
-      return kTRUE;
-   }
-   return kFALSE;
+  if (trackId >= 0 && trackId < static_cast<Int_t>(fParticles->size()) && fParticles->operator[](trackId)) {
+    return kTRUE;
+  }
+  return kFALSE;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -258,9 +257,9 @@ Bool_t TMCManagerStack::HasTrackId(Int_t trackId) const
 /// Set the user stack
 ///
 
-void TMCManagerStack::SetUserStack(TVirtualMCStack *stack)
+void TMCManagerStack::SetUserStack(TVirtualMCStack* stack)
 {
-   fUserStack = stack;
+  fUserStack = stack;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -268,16 +267,16 @@ void TMCManagerStack::SetUserStack(TVirtualMCStack *stack)
 /// Connect an engine's stack to the centrally managed vectors
 ///
 
-void TMCManagerStack::ConnectTrackContainers(std::vector<TParticle *> *particles,
-                                             std::vector<std::unique_ptr<TMCParticleStatus>> *tracksStatus,
-                                             TGeoMCBranchArrayContainer *branchArrayContainer, Int_t *totalNPrimaries,
-                                             Int_t *totalNTracks)
+void TMCManagerStack::ConnectTrackContainers(std::vector<TParticle*>* particles,
+                                             std::vector<std::unique_ptr<TMCParticleStatus>>* tracksStatus,
+                                             TGeoMCBranchArrayContainer* branchArrayContainer, Int_t* totalNPrimaries,
+                                             Int_t* totalNTracks)
 {
-   fParticles = particles;
-   fParticlesStatus = tracksStatus;
-   fBranchArrayContainer = branchArrayContainer;
-   fTotalNPrimaries = totalNPrimaries;
-   fTotalNTracks = totalNTracks;
+  fParticles = particles;
+  fParticlesStatus = tracksStatus;
+  fBranchArrayContainer = branchArrayContainer;
+  fTotalNPrimaries = totalNPrimaries;
+  fTotalNTracks = totalNTracks;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -287,7 +286,7 @@ void TMCManagerStack::ConnectTrackContainers(std::vector<TParticle *> *particles
 
 void TMCManagerStack::PushPrimaryTrackId(Int_t trackId)
 {
-   fPrimariesStack.push(trackId);
+  fPrimariesStack.push(trackId);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -297,7 +296,7 @@ void TMCManagerStack::PushPrimaryTrackId(Int_t trackId)
 
 void TMCManagerStack::PushSecondaryTrackId(Int_t trackId)
 {
-   fSecondariesStack.push(trackId);
+  fSecondariesStack.push(trackId);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -307,12 +306,12 @@ void TMCManagerStack::PushSecondaryTrackId(Int_t trackId)
 
 void TMCManagerStack::ResetInternals()
 {
-   // Reset current stack and track IDs
-   fCurrentTrackId = -1;
-   while (!fPrimariesStack.empty()) {
-      fPrimariesStack.pop();
-   }
-   while (!fSecondariesStack.empty()) {
-      fSecondariesStack.pop();
-   }
+  // Reset current stack and track IDs
+  fCurrentTrackId = -1;
+  while (!fPrimariesStack.empty()) {
+    fPrimariesStack.pop();
+  }
+  while (!fSecondariesStack.empty()) {
+    fSecondariesStack.pop();
+  }
 }

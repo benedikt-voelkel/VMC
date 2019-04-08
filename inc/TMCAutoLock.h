@@ -95,16 +95,16 @@ typedef pthread_mutex_t TMCMutex;
 #define TMCMUTEX_INITIALIZER PTHREAD_MUTEX_INITIALIZER
 #define TMCMUTEXLOCK pthread_mutex_lock
 #define TMCMUTEXUNLOCK pthread_mutex_unlock
-typedef int (*TMCthread_lock)(TMCMutex *);
-typedef int (*TMCthread_unlock)(TMCMutex *);
+typedef int (*TMCthread_lock)(TMCMutex*);
+typedef int (*TMCthread_unlock)(TMCMutex*);
 #else
 typedef int TMCMutex;
-int fake_mutex_lock_unlock(TMCMutex *);
+int fake_mutex_lock_unlock(TMCMutex*);
 #define TMCMUTEX_INITIALIZER 1
 #define TMCMUTEXLOCK fake_mutex_lock_unlock
 #define TMCMUTEXUNLOCK fake_mutex_lock_unlock
-typedef int (*TMCthread_lock)(TMCMutex *);
-typedef int (*TMCthread_unlock)(TMCMutex *);
+typedef int (*TMCthread_lock)(TMCMutex*);
+typedef int (*TMCthread_unlock)(TMCMutex*);
 #endif
 
 /// \brief Template classe which provides a mechanism to create a mutex and
@@ -115,37 +115,40 @@ typedef int (*TMCthread_unlock)(TMCMutex *);
 ///       cannot be shared among threads due to the locked switch
 
 template <class M, typename L, typename U>
-class TMCTemplateAutoLock {
-public:
-   TMCTemplateAutoLock(M *mtx, L l, U u) : locked(false), _m(mtx), _l(l), _u(u) { lock(); }
+class TMCTemplateAutoLock
+{
+ public:
+  TMCTemplateAutoLock(M* mtx, L l, U u) : locked(false), _m(mtx), _l(l), _u(u) { lock(); }
 
-   virtual ~TMCTemplateAutoLock() { unlock(); }
+  virtual ~TMCTemplateAutoLock() { unlock(); }
 
-   inline void unlock()
-   {
-      if (!locked) return;
-      _u(_m);
-      locked = false;
-   }
+  inline void unlock()
+  {
+    if (!locked)
+      return;
+    _u(_m);
+    locked = false;
+  }
 
-   inline void lock()
-   {
-      if (locked) return;
-      _l(_m);
-      locked = true;
-   }
+  inline void lock()
+  {
+    if (locked)
+      return;
+    _l(_m);
+    locked = true;
+  }
 
-private:
-   // Disable copy and assignement operators
-   //
-   TMCTemplateAutoLock(const TMCTemplateAutoLock &rhs);
-   TMCTemplateAutoLock &operator=(const TMCTemplateAutoLock &rhs);
+ private:
+  // Disable copy and assignement operators
+  //
+  TMCTemplateAutoLock(const TMCTemplateAutoLock& rhs);
+  TMCTemplateAutoLock& operator=(const TMCTemplateAutoLock& rhs);
 
-private:
-   bool locked;
-   M *_m;
-   L _l;
-   U _u;
+ private:
+  bool locked;
+  M* _m;
+  L _l;
+  U _u;
 };
 
 /// \brief Realization of TMCTemplateAutoLock with TMCMutex
@@ -153,10 +156,10 @@ private:
 /// Extracted from G4AutoLock implementation for Linux
 
 struct TMCImpMutexAutoLock : public TMCTemplateAutoLock<TMCMutex, TMCthread_lock, TMCthread_unlock> {
-   TMCImpMutexAutoLock(TMCMutex *mtx)
-      : TMCTemplateAutoLock<TMCMutex, TMCthread_lock, TMCthread_unlock>(mtx, &TMCMUTEXLOCK, &TMCMUTEXUNLOCK)
-   {
-   }
+  TMCImpMutexAutoLock(TMCMutex* mtx)
+    : TMCTemplateAutoLock<TMCMutex, TMCthread_lock, TMCthread_unlock>(mtx, &TMCMUTEXLOCK, &TMCMUTEXUNLOCK)
+  {
+  }
 };
 typedef TMCImpMutexAutoLock TMCAutoLock;
 

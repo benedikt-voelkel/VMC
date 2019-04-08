@@ -28,8 +28,8 @@ ClassImp(TVirtualMCGeometry);
 /// Standard constructor
 ///
 
-TVirtualMCGeometry::TVirtualMCGeometry(const char *name, const char *title)
-  : TNamed(name,title)
+TVirtualMCGeometry::TVirtualMCGeometry(const char* name, const char* title)
+  : TNamed(name, title)
 {
 }
 

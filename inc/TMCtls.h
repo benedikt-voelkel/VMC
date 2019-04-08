@@ -44,7 +44,7 @@
 // a build option
 #define VMC_MULTITHREADED 1
 
-#if ( defined (VMC_MULTITHREADED) )
+#if (defined(VMC_MULTITHREADED))
 
 #if (defined(__MACH__) && defined(__clang__) && defined(__x86_64__)) || (defined(__linux__) && defined(__clang__))
 #if (__has_feature(cxx_thread_local))
@@ -61,7 +61,7 @@
 #define TMCThreadLocal thread_local
 
 #elif ((defined(__linux__) || defined(__MACH__)) && !defined(__INTEL_COMPILER) && defined(__GNUC__) && \
-          (__GNUC__ >= 4 && __GNUC_MINOR__ >= 9) ||                                                    \
+         (__GNUC__ >= 4 && __GNUC_MINOR__ >= 9) ||                                                     \
        __GNUC__ >= 5)
 #define TMCThreadLocalStatic static thread_local
 #define TMCThreadLocal thread_local

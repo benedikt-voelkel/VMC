@@ -23,13 +23,13 @@ ClassImp(TVirtualMCSensitiveDetector);
 ////////////////////////////////////////////////////////////////////////////////
 /// Standard constructor
 
-TVirtualMCSensitiveDetector::TVirtualMCSensitiveDetector(const char *name, const char *title) : TNamed(name, title) {}
+TVirtualMCSensitiveDetector::TVirtualMCSensitiveDetector(const char* name, const char* title) : TNamed(name, title) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Standard constructor
 
-TVirtualMCSensitiveDetector::TVirtualMCSensitiveDetector(const TString &name, const TString &title)
-   : TNamed(name, title)
+TVirtualMCSensitiveDetector::TVirtualMCSensitiveDetector(const TString& name, const TString& title)
+  : TNamed(name, title)
 {
 }
 
@@ -41,11 +41,11 @@ TVirtualMCSensitiveDetector::TVirtualMCSensitiveDetector() : TNamed() {}
 ////////////////////////////////////////////////////////////////////////////////
 /// Copy constructor
 
-TVirtualMCSensitiveDetector::TVirtualMCSensitiveDetector(const TVirtualMCSensitiveDetector &rhs) : TNamed(rhs)
+TVirtualMCSensitiveDetector::TVirtualMCSensitiveDetector(const TVirtualMCSensitiveDetector& rhs) : TNamed(rhs)
 {
-   /// Copy constructor
+  /// Copy constructor
 
-   *this = rhs;
+  *this = rhs;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,14 +56,14 @@ TVirtualMCSensitiveDetector::~TVirtualMCSensitiveDetector() {}
 ////////////////////////////////////////////////////////////////////////////////
 /// Assignment operator
 
-TVirtualMCSensitiveDetector &TVirtualMCSensitiveDetector::operator=(const TVirtualMCSensitiveDetector &rhs)
+TVirtualMCSensitiveDetector& TVirtualMCSensitiveDetector::operator=(const TVirtualMCSensitiveDetector& rhs)
 {
-   // check assignment to self
-   if (this == &rhs)
-      return *this;
+  // check assignment to self
+  if (this == &rhs)
+    return *this;
 
-   // base class assignment
-   TNamed::operator=(rhs);
+  // base class assignment
+  TNamed::operator=(rhs);
 
-   return *this;
+  return *this;
 }

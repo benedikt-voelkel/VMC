@@ -25,10 +25,12 @@ ClassImp(TVirtualMCStack);
 
 TVirtualMCStack::TVirtualMCStack()
   : TObject()
-{}
+{
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Destructor
 
 TVirtualMCStack::~TVirtualMCStack()
-{}
+{
+}

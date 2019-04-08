@@ -53,8 +53,8 @@
 #include "TMCAutoLock.h"
 
 #if !defined(TMCMULTITHREADED)
-int fake_mutex_lock_unlock(TMCMutex *)
+int fake_mutex_lock_unlock(TMCMutex*)
 {
-   return 0;
+  return 0;
 }
 #endif

@@ -22,7 +22,7 @@ Interface to a user Monte Carlo application.
 
 */
 
-TMCThreadLocal TVirtualMCApplication *TVirtualMCApplication::fgInstance = nullptr;
+TMCThreadLocal TVirtualMCApplication* TVirtualMCApplication::fgInstance = nullptr;
 Bool_t TVirtualMCApplication::fLockMultiThreading = kFALSE;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,22 +30,22 @@ Bool_t TVirtualMCApplication::fLockMultiThreading = kFALSE;
 /// Standard constructor
 ///
 
-TVirtualMCApplication::TVirtualMCApplication(const char *name, const char *title) : TNamed(name, title)
+TVirtualMCApplication::TVirtualMCApplication(const char* name, const char* title) : TNamed(name, title)
 {
-   if (fgInstance) {
-      ::Fatal("TVirtualMCApplication::TVirtualMCApplication", "Attempt to create two instances of singleton.");
-   }
+  if (fgInstance) {
+    ::Fatal("TVirtualMCApplication::TVirtualMCApplication", "Attempt to create two instances of singleton.");
+  }
 
-   // This is set to true if a TMCManager was reuqested.
-   if (fLockMultiThreading) {
-      ::Fatal("TVirtualMCApplication::TVirtualMCApplication", "In multi-engine run ==> multithreading is disabled.");
-   }
+  // This is set to true if a TMCManager was reuqested.
+  if (fLockMultiThreading) {
+    ::Fatal("TVirtualMCApplication::TVirtualMCApplication", "In multi-engine run ==> multithreading is disabled.");
+  }
 
-   fgInstance = this;
-   // There cannot be a TVirtualMC since it must have registered to this
-   // TVirtualMCApplication
-   fMC = nullptr;
-   fMCManager = nullptr;
+  fgInstance = this;
+  // There cannot be a TVirtualMC since it must have registered to this
+  // TVirtualMCApplication
+  fMC = nullptr;
+  fMCManager = nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,9 +55,9 @@ TVirtualMCApplication::TVirtualMCApplication(const char *name, const char *title
 
 TVirtualMCApplication::TVirtualMCApplication() : TNamed()
 {
-   fgInstance = this;
-   fMC = nullptr;
-   fMCManager = nullptr;
+  fgInstance = this;
+  fMC = nullptr;
+  fMCManager = nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,10 +67,10 @@ TVirtualMCApplication::TVirtualMCApplication() : TNamed()
 
 TVirtualMCApplication::~TVirtualMCApplication()
 {
-   fgInstance = nullptr;
-   if (fMCManager) {
-      delete fMCManager;
-   }
+  fgInstance = nullptr;
+  if (fMCManager) {
+    delete fMCManager;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,9 +78,9 @@ TVirtualMCApplication::~TVirtualMCApplication()
 /// Static access method
 ///
 
-TVirtualMCApplication *TVirtualMCApplication::Instance()
+TVirtualMCApplication* TVirtualMCApplication::Instance()
 {
-   return fgInstance;
+  return fgInstance;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -90,10 +90,10 @@ TVirtualMCApplication *TVirtualMCApplication::Instance()
 
 void TVirtualMCApplication::RequestMCManager()
 {
-   fMCManager = new TMCManager();
-   fMCManager->Register(this);
-   fMCManager->ConnectEnginePointer(&fMC);
-   fLockMultiThreading = kTRUE;
+  fMCManager = new TMCManager();
+  fMCManager->Register(this);
+  fMCManager->ConnectEnginePointer(&fMC);
+  fLockMultiThreading = kTRUE;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -101,17 +101,18 @@ void TVirtualMCApplication::RequestMCManager()
 /// /// Register the an engine.
 ///
 
-void TVirtualMCApplication::Register(TVirtualMC *mc)
+void TVirtualMCApplication::Register(TVirtualMC* mc)
 {
-   // If there is already a transport engine, fail since only one is allowed.
-   if (fMC && !fMCManager) {
-      Fatal("Register", "Attempt to register a second TVirtualMC which "
-                        "is not allowed");
-   }
-   fMC = mc;
-   if (fMCManager) {
-      fMCManager->Register(mc);
-   }
+  // If there is already a transport engine, fail since only one is allowed.
+  if (fMC && !fMCManager) {
+    Fatal("Register",
+          "Attempt to register a second TVirtualMC which "
+          "is not allowed");
+  }
+  fMC = mc;
+  if (fMCManager) {
+    fMCManager->Register(mc);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -119,7 +120,7 @@ void TVirtualMCApplication::Register(TVirtualMC *mc)
 /// Return the current transport engine in use
 ///
 
-TVirtualMC *TVirtualMCApplication::GetMC() const
+TVirtualMC* TVirtualMCApplication::GetMC() const
 {
-   return fMC;
+  return fMC;
 }

@@ -10,7 +10,22 @@ each deriving from `TVirtualMC` implementing all necessary methods.
 
 Before a user can instantiate an engine, an object deriving from `TVirtualMCApplication` needs to be present which has to be implemented by the user. It contains necessary hooks called from the `TVirtualMC`s depending on their internal state. At the same time it provides the bridge between the user code and VMC. For instance, the user code can contain the geometry construction routines somewhere which should be called from the implemented `UserApplication::ConstructGeometry()`.
 
-Further general information on the VMC project can be found [here](https://root.cern.ch/vmc)
+Further general information on the VMC project can be found at
+
+* [ROOT VMC](https://root.cern.ch/vmc)
+* [The Virtual Monte Carlo paper](http://www.slac.stanford.edu/econf/C0303241/proc/papers/THJT006.PDF)
+* [The Geant4 Virtual Monte Carlo](https://root.cern.ch/geant4-vmc)
+* [The ALICE Offline Project](http://aliceinfo.cern.ch/Offline)
+
+## Installation
+
+The installation requires [ROOT](https://github.com/root-project/root) to be installed and invokes `CMake`. Proceed as follows:
+```bash
+mkdir $VMC_BUILD_DIR; cd $VMC_BUILD_DIR
+source $ROOT_DIR/bin/thisroot.sh
+cmake $SOURCE_DIR -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR
+make -j$NUMBER_OF_JOBS && make install
+```
 
 ## Running multiple different engines
 

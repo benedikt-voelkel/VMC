@@ -27,60 +27,61 @@
 
 class TVirtualMCStack;
 
-class TMCVerbose : public TObject {
-public:
-   TMCVerbose(Int_t level);
-   TMCVerbose();
-   virtual ~TMCVerbose();
+class TMCVerbose : public TObject
+{
+ public:
+  TMCVerbose(Int_t level);
+  TMCVerbose();
+  virtual ~TMCVerbose();
 
-   // methods
-   virtual void InitMC();
-   virtual void RunMC(Int_t nofEvents);
-   virtual void FinishRun();
+  // methods
+  virtual void InitMC();
+  virtual void RunMC(Int_t nofEvents);
+  virtual void FinishRun();
 
-   virtual void ConstructGeometry();
-   virtual void ConstructOpGeometry();
-   virtual void InitGeometry();
-   virtual void AddParticles();
-   virtual void AddIons();
-   virtual void GeneratePrimaries();
-   virtual void BeginEvent();
-   virtual void BeginPrimary();
-   virtual void PreTrack();
-   virtual void Stepping();
-   virtual void PostTrack();
-   virtual void FinishPrimary();
-   virtual void FinishEvent();
+  virtual void ConstructGeometry();
+  virtual void ConstructOpGeometry();
+  virtual void InitGeometry();
+  virtual void AddParticles();
+  virtual void AddIons();
+  virtual void GeneratePrimaries();
+  virtual void BeginEvent();
+  virtual void BeginPrimary();
+  virtual void PreTrack();
+  virtual void Stepping();
+  virtual void PostTrack();
+  virtual void FinishPrimary();
+  virtual void FinishEvent();
 
-   // set methods
-   void SetLevel(Int_t level);
+  // set methods
+  void SetLevel(Int_t level);
 
-   // get methods
-   Int_t GetLevel() const;
+  // get methods
+  Int_t GetLevel() const;
 
-private:
-   // methods
-   void PrintBanner() const;
-   void PrintTrackInfo() const;
-   void PrintStepHeader() const;
+ private:
+  // methods
+  void PrintBanner() const;
+  void PrintTrackInfo() const;
+  void PrintStepHeader() const;
 
-   // data members
-   Int_t fLevel;      ///< Verbose level
-   Int_t fStepNumber; ///< Current step number
+  // data members
+  Int_t fLevel;      ///< Verbose level
+  Int_t fStepNumber; ///< Current step number
 
-   ClassDef(TMCVerbose, 1) // Verbose class for MC application
+  ClassDef(TMCVerbose, 1) // Verbose class for MC application
 };
 
 // inline functions
 
 inline void TMCVerbose::SetLevel(Int_t level)
 {
-   fLevel = level;
+  fLevel = level;
 }
 
 inline Int_t TMCVerbose::GetLevel() const
 {
-   return fLevel;
+  return fLevel;
 }
 
 #endif // ROOT_TMCVerbose
